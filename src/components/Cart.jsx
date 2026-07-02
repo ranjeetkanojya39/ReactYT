@@ -7,7 +7,7 @@
 //         <img
 //             src="https://i.pravatar.cc/150?img=1"
 //             alt="Profile"
-//             className="ml-8 h-32 w-32 rounded-full mb-3"
+//            className="ml-8 h-32 w-32 rounded-full mb-3"
 // />
 //         <h1 className='text-2xl font-semibold mb-4'>{props.name}</h1>
 //         <p className='text-lg'>{props.profession}</p>

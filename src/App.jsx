@@ -29,51 +29,90 @@
 
 // export default App
 
+import axios from "axios"; // Axios library for making API requests
+import React, { useState  , useEffect} from "react"; // Import React and useState hook
 
-import axios from "axios";
-import React, { useState } from "react";
-
+// Functional Component
 const App = () => {
+
+  // State to store API data
   const [data, setData] = useState([]);
 
+  // Function to fetch data from the API
   const getData = async () => {
+
+    // Send GET request to Picsum API
     const res = await axios.get(
       "https://picsum.photos/v2/list?page=2&limit=20"
     );
+
+    // Store the response data in state
     setData(res.data);
   };
+  useEffect(() => {
+    getData(); // Fetch data when the component mounts
+
+  },[])
 
   return (
     <div className="p-10">
+
+      {/* Button to fetch data
       <button
-        onClick={getData}
+        onClick={getData} // Calls getData when clicked
         className="bg-emerald-700 text-white px-4 py-2 rounded font-medium"
       >
         Get Data
-      </button>
+      </button> */}
 
+      {/* Grid container for cards */}
       <div className="grid grid-cols-3 gap-5 mt-5">
+
+        {/* Loop through the data array */}
         {data.map((elem) => {
+
           return (
+
+            // Single Card
             <div
-              key={elem.id}
+              key={elem.id} // Unique key for React
               className="bg-white text-black inline-block p-6 text-center rounded"
             >
+
+              {/* Image */}
               <img
                 src={elem.download_url}
                 alt="Profile"
                 className="ml-8 h-32 w-32 rounded-full mb-3 object-cover"
               />
-              <h1 className="text-2xl font-semibold mb-4">{elem.author}</h1>
-              <p className="text-lg">ID: {elem.id}</p>
-              <h1 className="text-xl font-bold">Width: {elem.width}</h1>
-              <h1 className="text-lg">Height: {elem.height}</h1>
+
+              {/* Author Name */}
+              <h1 className="text-2xl font-semibold mb-4">
+                {elem.author}
+              </h1>
+
+              {/* Image ID */}
+              <p className="text-lg">
+                ID: {elem.id}
+              </p>
+
+              {/* Image Width */}
+              <h1 className="text-xl font-bold">
+                Width: {elem.width}
+              </h1>
+
+              {/* Image Height */}
+              <h1 className="text-lg">
+                Height: {elem.height}
+              </h1>
+
             </div>
           );
         })}
+
       </div>
     </div>
   );
 };
 
-export default App
+export default App;
