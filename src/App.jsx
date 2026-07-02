@@ -1,42 +1,28 @@
-// import React, { useState } from 'react';
-
-// const App = () => {
-//   const [num, setNum] = useState(0);
-
-//   return (
-//     <div>
-//       <h2>Number is {num}</h2>
-
-//       <button onClick={() => setNum(num + 10)}>
-//         Increment
-//       </button>
-
-//       <button onClick={() => setNum(num - 10)}>
-//         Decrement
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default App;
-
-
 // import React from 'react'
+// import Cart from './components/Cart'
 
 // const App = () => {
-//   const submitHandler = (e) =>{
-//     e.preventDefault()
 
-//     console.log("submittend")
-//   }
+//     const users = [
+        
+//   {
+//     "name": "Alice Johnson",
+//     "city": "New York",
+//     "age": 28,
+//     "profession": "Software Engineer",
+//     "profilePhoto": "https://example.com/photos/alice.jpg"
+//   },
+ 
+// ]
+    
 //   return (
 //     <div>
-//       <form onSubmit={(e) =>{
-//         submitHandler(e)
-//       }}>
-//         <input className='px4 rounded py-3 text-xl m-5 ' type="name" placeholder='emter name' />
-//         <button className='px4 rounded py-3 text-xl m-5 '> submit </button>
-//       </form>
+//       <div className='p-10'>
+//         {users.map(function(elem,index){
+//           return <Cart key={index} name={elem.name} age={elem.age} city={elem.city} profession={elem.profession} photo={elem.profilePhoto}/>
+//         })}
+
+//       </div>
 //     </div>
 //   )
 // }
@@ -44,51 +30,50 @@
 // export default App
 
 
-// import React, { useState } from "react";
-
-// const App = () => {
-//   const [username, setUsername] = useState("");
-
-//   const submitHandler = (e) => {
-//     e.preventDefault();
-//     console.log(username);
-//     setUsername("");
-//   };
-
-//   return (
-//     <div>
-//       <form onSubmit={submitHandler}>
-//         <input
-//           value={username}
-//           onChange={(e) => setUsername(e.target.value)}
-//           className="px-4 py-3 rounded text-xl m-5 border"
-//           type="text"
-//           placeholder="Enter a name"
-//         />
-
-//         <button
-//           className="px-4 py-3 m-5 text-xl font-semibold bg-green-500 text-white rounded"
-//           type="submit"
-//         >
-//           Submit
-//         </button>
-//       </form>
-//     </div>
-//   ); ;
-// }
-// export default App
-
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import axios from "axios";
+import React, { useState } from "react";
 
 const App = () => {
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    const res = await axios.get(
+      "https://picsum.photos/v2/list?page=2&limit=20"
+    );
+    setData(res.data);
+  };
+
   return (
-     <>
-      <Navbar />
-  
-      <Footer />
-    </>
-  )
-}
+    <div className="p-10">
+      <button
+        onClick={getData}
+        className="bg-emerald-700 text-white px-4 py-2 rounded font-medium"
+      >
+        Get Data
+      </button>
+
+      <div className="grid grid-cols-3 gap-5 mt-5">
+        {data.map((elem) => {
+          return (
+            <div
+              key={elem.id}
+              className="bg-white text-black inline-block p-6 text-center rounded"
+            >
+              <img
+                src={elem.download_url}
+                alt="Profile"
+                className="ml-8 h-32 w-32 rounded-full mb-3 object-cover"
+              />
+              <h1 className="text-2xl font-semibold mb-4">{elem.author}</h1>
+              <p className="text-lg">ID: {elem.id}</p>
+              <h1 className="text-xl font-bold">Width: {elem.width}</h1>
+              <h1 className="text-lg">Height: {elem.height}</h1>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default App
